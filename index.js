@@ -1,12 +1,17 @@
+import "dotenv/config";
+
 import express from "express";
-import { connectDB,disconnectDB,prisma } from "./config/db.js";
-import { config } from "dotenv";
+import { connectDB, disconnectDB } from "./config/db.js";
+import authRoute from "./Routes/authRoute.js";
 
-config()
-connectDB()
+await connectDB();
 
+const app = express();
+app.use(express.json());
+app.use("/auth", authRoute);
 
-
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 
 
